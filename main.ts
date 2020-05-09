@@ -6,8 +6,9 @@
      * of it implement this interface. The onDestroyed method is called
      * when the corresponding sprite is destroyed.
      */
-    export interface SpriteWrapper {
+    interface SpriteWrapper {
         sprite: Sprite;
+        destroy(): void;
         onDestroyed(): void;
     }
 
@@ -19,19 +20,35 @@
      */
     export abstract class Support implements SpriteWrapper {
         public readonly sprite: Sprite;
+
+        /**
+         * Registers this instance by calling the register function
+         * to be able to look this instance up with "fromSprite" again.
+         */
         constructor(sprite: Sprite) {
             this.sprite = sprite;
             register(this);
         }
 
+        /**
+         * Gets called, when the associated sprite got destroyed.
+         */
         public onDestroyed(): void { };
+
+
+        /**
+         * Destroys the associated sprite
+         */
+        public destroy(): void {
+            this.sprite.destroy();
+        }
     }
 
     /**
      * Registers a SpriteWrapper object whose onDestroyed
      * mehtod is called, when the wrapped sprite is destroyed.
      */
-    export function register(object: SpriteWrapper): void {
+    function register(object: SpriteWrapper): void {
         objects[object.sprite.id] = object;
 
         object.sprite.onDestroyed(() => {
