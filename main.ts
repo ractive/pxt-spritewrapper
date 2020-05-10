@@ -72,6 +72,7 @@
      * Returns all registered SpriteWrapper objects
      */
     export function all(): SpriteWrapper[] {
-        return objects.values();
+        console.log("all");
+        return Object.keys(objects).map(key => objects[key]);
     }
 }
