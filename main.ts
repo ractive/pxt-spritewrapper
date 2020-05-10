@@ -6,7 +6,7 @@
      * of it implement this interface. The onDestroyed method is called
      * when the corresponding sprite is destroyed.
      */
-    interface SpriteWrapper {
+    export interface SpriteWrapper {
         sprite: Sprite;
         destroy(): void;
         onDestroyed(): void;
